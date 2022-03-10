@@ -8,27 +8,20 @@ class IAmPoorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 32),
-              child: const Text(
-                "I'm poor",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Image.network(
-              "https://ichef.bbci.co.uk/news/976/cpsprodpb/2FB3/production/_106211221_poverty.jpg",
-            ),
-          ],
+        title: Center(
+          child: Text(
+            title,
+          ),
         ),
+        backgroundColor: Colors.green.shade900,
+      ),
+      body: Container(
+        color: Colors.lightBlueAccent,
+        child: Center(
+            child: Image.asset(
+          "assets/images/carvao.png",
+          fit: BoxFit.cover,
+        )),
       ),
     );
   }

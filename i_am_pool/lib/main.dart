@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter I am poor',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.lightGreen,
       ),
-      home: const IAmPoorPage(title: 'I am poor'),
+      home: const IAmPoorPage(title: 'I Am Poor'),
     );
   }
 }
