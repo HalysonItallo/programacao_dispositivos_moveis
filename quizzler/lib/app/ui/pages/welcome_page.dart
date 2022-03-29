@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quizzler/app/ui/pages/quiz_page.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

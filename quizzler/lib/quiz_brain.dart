@@ -1,44 +1,57 @@
-import 'question.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:quizzler/question.dart';
 
 class QuizBrain {
-  late int _questionNumber = 0;
+  late int questionNumber = 0;
 
-  final List<Question> _questionBank = [
-    Question(
-      "Some cats are actually to humans.",
-      "correct",
-    ),
-    Question(
-      "You can lead a cow down stairs but not up stairs.",
-      "error",
-    ),
-    Question(
-      "Approximately one quarter of human bones are in the feet.",
-      "maybe",
-    ),
-  ];
+  final SessionManager sessionManager;
+
+  QuizBrain(this.sessionManager) {
+    uploadData();
+    getData();
+  }
 
   void nextQuestion() {
-    _questionNumber++;
+    questionNumber++;
   }
 
-  String getQuestionText() {
-    return _questionBank[_questionNumber].questionText;
+  dynamic getData() async {
+    dynamic data = await sessionManager.get("questionBank");
+
+    return data["questions"].map((e) => Question.fromJson(e)).toList();
   }
 
-  String getCorrectAnswer() {
-    return _questionBank[_questionNumber].questionAnswer;
-  }
-
-  bool isFinished() {
-    return _questionNumber >= (_questionBank.length - 1);
+  void uploadData() async {
+    await sessionManager.set(
+      "questionBank",
+      """
+    {
+      "questions": [
+        {
+          "question": {
+            "question": "Some cats are actually to humans.",
+            "answer": "correct"
+          }
+        },
+        {
+          "question": {
+            "question": "You can lead a cow down stairs but not up stairs.",
+            "answer": "error"
+          }
+        },
+        {
+          "question": {
+            "question": "Approximately one quarter of human bones are in the feet.",
+            "answer": "maybe"
+          }
+        }
+      ]
+    }
+    """,
+    );
   }
 
   void reset() {
-    _questionNumber = 0;
-  }
-
-  int get length {
-    return _questionBank.length;
+    questionNumber = 0;
   }
 }

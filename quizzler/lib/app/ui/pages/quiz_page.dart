@@ -1,46 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:quizzler/app/ui/components/question_button.dart';
 import 'package:quizzler/app/ui/components/question_text.dart';
+
 import 'package:quizzler/quiz_brain.dart';
 
 class QuizPage extends StatefulWidget {
-  const QuizPage({Key? key}) : super(key: key);
+  const QuizPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<QuizPage> createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
-  QuizBrain quizBrain = QuizBrain();
-  List<Icon> scoreKeeper = [];
+  QuizBrain quizBrain = QuizBrain(SessionManager());
+  List<bool> scoreKeeper = [];
 
-  Color getColorByValueAnswer(bool correctAnswer) {
-    if (correctAnswer) {
-      return Colors.green;
-    }
-    return Colors.red;
-  }
-
-  void checkAnswer(String userPickedAnswer) {
-    String correctAnswer = quizBrain.getCorrectAnswer();
+  void checkAnswer(String userPickedAnswer, dynamic data) {
+    String correctAnswer = data[quizBrain.questionNumber].question.answer;
     setState(() {
-      if (quizBrain.length != scoreKeeper.length) {
-        scoreKeeper.add(
-          Icon(
-            Icons.circle,
-            color: getColorByValueAnswer(
-              userPickedAnswer == correctAnswer,
-            ),
-          ),
-        );
+      if (data!.length != scoreKeeper.length) {
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(true);
+        }
       }
 
-      if (quizBrain.isFinished() == false) {
+      if (quizBrain.questionNumber < data!.length - 1) {
         quizBrain.nextQuestion();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Parabéns por finalizar o quiz'),
+          SnackBar(
+            content: Text(
+              "Parabéns por finalizar o quiz, sua pontuação foi: ${getPontuation(data!.length)} %",
+            ),
           ),
         );
         Future.delayed(
@@ -56,6 +50,11 @@ class _QuizPageState extends State<QuizPage> {
     });
   }
 
+  String getPontuation(lenght) {
+    double percentage = (scoreKeeper.length / lenght) * 100;
+    return percentage.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,76 +64,95 @@ class _QuizPageState extends State<QuizPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Text("Pontuação:"),
-                const SizedBox(
-                  width: 5,
-                ),
-                Row(
-                  children: scoreKeeper,
-                ),
-              ],
-            ),
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(top: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: FutureBuilder(
+          future: quizBrain.getData(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+
+              case ConnectionState.active:
+
+              case ConnectionState.waiting:
+                return const SizedBox(
+                  height: 400,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              case ConnectionState.done:
+                var data = snapshot.data;
+                return Column(
                   children: [
-                    QuestionText(
-                      text: quizBrain.getQuestionText(),
-                    ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        QuestionButton(
-                          onPressed: () {
-                            checkAnswer("correct");
-                          },
-                          icon: Icons.check,
-                          color: Colors.green,
-                          tooltip: "correto",
-                        ),
+                        const Text("Pontuação:"),
                         const SizedBox(
-                          width: 15,
+                          width: 5,
                         ),
-                        QuestionButton(
-                          onPressed: () {
-                            checkAnswer("maybe");
-                          },
-                          icon: Icons.question_mark,
-                          color: Colors.yellow.shade700,
-                          tooltip: "talvez",
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        QuestionButton(
-                          onPressed: () {
-                            checkAnswer("error");
-                          },
-                          icon: Icons.close,
-                          color: Colors.red,
-                          tooltip: "incorreto",
-                        ),
+                        Text("${getPontuation(data!.length)} %"),
                       ],
                     ),
+                    Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(top: 15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            QuestionText(
+                              text:
+                                  "${data[quizBrain.questionNumber].question.question}",
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                QuestionButton(
+                                  onPressed: () {
+                                    checkAnswer("correct", data);
+                                  },
+                                  icon: Icons.check,
+                                  color: Colors.green,
+                                  tooltip: "correto",
+                                ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                QuestionButton(
+                                  onPressed: () {
+                                    checkAnswer("maybe", data);
+                                  },
+                                  icon: Icons.question_mark,
+                                  color: Colors.yellow.shade700,
+                                  tooltip: "talvez",
+                                ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                QuestionButton(
+                                  onPressed: () {
+                                    checkAnswer("error", data);
+                                  },
+                                  icon: Icons.close,
+                                  color: Colors.red,
+                                  tooltip: "incorreto",
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ),
-          ],
+                );
+            }
+          },
         ),
       ),
     );

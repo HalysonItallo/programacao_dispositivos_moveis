@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:quizzler/app/ui/pages/welcome_page.dart';
 
 void main() {
