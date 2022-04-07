@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:albums/app/models/album.dart';
+import 'package:albums/app/ui/widgets/pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,22 +13,22 @@ class AlbumsPage extends StatefulWidget {
 }
 
 class _AlbumsPageState extends State<AlbumsPage> {
-  int moreData = 5;
+  final int limit = 10;
+  int selectedPage = 1;
 
   Future<dynamic> fetchAlbum() async {
     var response = await http.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+      Uri.parse(
+          'https://jsonplaceholder.typicode.com/albums?_page=$selectedPage&_limit=$limit'),
     );
 
     return jsonDecode(response.body).map((e) => Album.fromJson(e)).toList();
   }
 
-  void getMoreData(dataLenght) {
-    if (moreData < (dataLenght - 1)) {
-      setState(() {
-        moreData += 5;
-      });
-    }
+  void setPage(int actualPage) {
+    setState(() {
+      selectedPage = actualPage;
+    });
   }
 
   @override
@@ -55,7 +56,7 @@ class _AlbumsPageState extends State<AlbumsPage> {
               List data = snapshot.data;
               return ListView.builder(
                 shrinkWrap: true,
-                itemCount: moreData,
+                itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     children: [
@@ -69,12 +70,13 @@ class _AlbumsPageState extends State<AlbumsPage> {
                         },
                         child: Text(data[index].title),
                       ),
-                      index == moreData - 1
-                          ? ElevatedButton(
-                              onPressed: () {
-                                getMoreData(data.length);
+                      index == limit - 1
+                          ? Pagination(
+                              limit: limit,
+                              totalItems: 100,
+                              onChange: (actualPage) {
+                                setPage(actualPage);
                               },
-                              child: const Text("View more"),
                             )
                           : Container(),
                     ],
