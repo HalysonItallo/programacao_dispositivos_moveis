@@ -1,4 +1,4 @@
-# albums
+# posts
 
 A new Flutter project.
 
@@ -16,5 +16,4 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Video
- - [link do video](https://drive.google.com/file/d/1uQ3ewv1lizUUk6WmGiuNdqKF2OIIz-Fm/view?usp=sharing)
- - [link video alteração]()
+- [link](https://drive.google.com/file/d/1LVAOrc6hMKscxwWpmNa_S0cerNVEEFD0/view?usp=sharing)

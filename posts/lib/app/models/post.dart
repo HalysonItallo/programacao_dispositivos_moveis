@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-Album albumFromJson(String str) => Album.fromJson(json.decode(str));
+Post postFromJson(String str) => Post.fromJson(json.decode(str));
 
-String albumToJson(Album data) => json.encode(data.toJson());
+String postToJson(Post data) => json.encode(data.toJson());
 
-class Album {
-  Album({
+class Post {
+  Post({
     required this.userId,
     required this.id,
     required this.title,
@@ -17,7 +17,7 @@ class Album {
   final String title;
   final String body;
 
-  factory Album.fromJson(Map<String, dynamic> json) => Album(
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
         userId: json["userId"],
         id: json["id"],
         title: json["title"],
