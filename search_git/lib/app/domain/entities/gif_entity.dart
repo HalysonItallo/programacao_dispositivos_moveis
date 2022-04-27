@@ -1,21 +1,25 @@
 import 'dart:convert';
 
-GifModel gifModelFromJson(String str) => GifModel.fromJson(json.decode(str));
+GifEntity gifEntityFromJson(String str) => GifEntity.fromJson(json.decode(str));
 
-String gifModelToJson(GifModel data) => json.encode(data.toJson());
+String gifEntityToJson(GifEntity data) => json.encode(data.toJson());
 
-class GifModel {
-  GifModel({
+class GifEntity {
+  GifEntity({
+    required this.title,
     required this.images,
   });
 
+  final String title;
   final Images images;
 
-  factory GifModel.fromJson(Map<String, dynamic> json) => GifModel(
+  factory GifEntity.fromJson(Map<String, dynamic> json) => GifEntity(
+        title: json["title"],
         images: Images.fromJson(json["images"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "title": title,
         "images": images.toJson(),
       };
 }
