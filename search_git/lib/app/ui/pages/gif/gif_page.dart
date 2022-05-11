@@ -53,6 +53,7 @@ class _GifPageState extends State<GifPage> {
           ),
         ),
         centerTitle: true,
+        
       ),
       backgroundColor: const Color.fromRGBO(41, 50, 65, 1),
       body: Column(
