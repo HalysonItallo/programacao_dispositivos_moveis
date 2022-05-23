@@ -9,16 +9,16 @@ class AutocompleteWidget extends StatelessWidget {
   }) : super(key: key);
 
   static const List<String> _options = <String>[
-    "Andy",
-    "Aragon",
-    "Bob",
-    "Barbara",
-    "Candy",
-    "Colin",
-    "Audra",
-    "Banana",
-    "Caversky",
-    "Becky",
+    'quidem molestiae enim',
+    'sunt qui excepturi placeat culpa',
+    'omnis laborum odio',
+    'non esse culpa molestiae omnis sed optio',
+    'eaque aut omnis a',
+    'natus impedit quibusdam illo est',
+    'quibusdam autem aliquid et et quia',
+    'qui fuga est a eum',
+    'saepe unde necessitatibus rem',
+    'distinctio laborum qui'
   ];
 
   @override

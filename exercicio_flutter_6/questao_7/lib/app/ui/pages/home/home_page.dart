@@ -1,103 +1,100 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:questao_6/app/models/albums.dart';
+import 'package:questao_6/app/ui/widgets/autocomplete.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class AlbumsPage extends StatefulWidget {
+  const AlbumsPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AlbumsPage> createState() => _AlbumsPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _textController = TextEditingController();
-  late String _selectedCity;
-  final Dio dio = Dio();
+class _AlbumsPageState extends State<AlbumsPage> {
+  late List<dynamic> _allAlbums = [];
+  late List<dynamic> _foundAlbums = [];
 
-  Future<dynamic> fetchSuggestions() async {
-    var response = await dio.get(
-        'https://api.addsearch.com/v1/suggest/cfa10522e4ae6987c390ab72e9393908?term=casa');
+  Future fetchAlbum() async {
+    var response = await http.get(
+      Uri.parse('https://jsonplaceholder.typicode.com/albums?_limit=10'),
+    );
 
-    print(response.data);
-    return jsonDecode(response.data);
+    setState(() {
+      _allAlbums =
+          jsonDecode(response.body).map((e) => Album.fromJson(e)).toList();
+      _foundAlbums = _allAlbums;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAlbum();
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<dynamic> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = _allAlbums;
+    } else {
+      results = _allAlbums
+          .where(
+            (album) => album.title
+                .toLowerCase()
+                .contains(enteredKeyword.toLowerCase()),
+          )
+          .toList();
+    }
+
+    setState(() {
+      _foundAlbums = results;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text('Qual a sua cidade favorita?'),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      SizedBox(
-                        width: 200,
-                        child: TextField(
-                          controller: _textController,
-                          onEditingComplete: () {
-                            fetchSuggestions();
-                          },
-                        ),
-                      ),
-                      _textController.text.isNotEmpty
-                          ? SizedBox(
-                              width: 200,
-                              child: DropdownButton(
-                                items: <String>[
-                                  'One',
-                                  'Two',
-                                  'Free',
-                                  'Four'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {},
-                              ),
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      ElevatedButton(
-                        child: const Text('Enviar'),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    'Your Favorite City is $_selectedCity'),
-                              ),
-                            );
-                          }
-                        },
-                      )
-                    ],
+      appBar: AppBar(
+        title: const Text('Albums Page'),
+      ),
+      body: Column(
+        children: [
+          AutocompleteWidget(
+            onSelected: (String selection) {
+              _runFilter(selection);
+            },
+          ),
+          _foundAlbums.isEmpty
+              ? const SizedBox(
+                  height: 400,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _foundAlbums.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TextButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Álbum $index clicado."),
+                          ),
+                        );
+                      },
+                      child: Text(_foundAlbums[index].title),
+                    );
+                  },
                 ),
-              ),
-            )
-          ],
-        ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.clear_all),
+        onPressed: () {
+          fetchAlbum();
+        },
       ),
     );
   }

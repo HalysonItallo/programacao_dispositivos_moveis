@@ -9,16 +9,10 @@ class AutocompleteWidget extends StatelessWidget {
   }) : super(key: key);
 
   static const List<String> _options = <String>[
-    "Andy",
-    "Aragon",
-    "Bob",
-    "Barbara",
-    "Candy",
-    "Colin",
-    "Audra",
-    "Banana",
-    "Caversky",
-    "Becky",
+    'Amanda',
+    'Barbara',
+    'Carla',
+    'Daniel'
   ];
 
   @override

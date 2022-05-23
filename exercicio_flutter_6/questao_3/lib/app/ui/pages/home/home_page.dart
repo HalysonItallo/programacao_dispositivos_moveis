@@ -15,6 +15,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool verifyTristateLogic = (valuecheckBox1 == true &&
+        valuecheckBox2 == true &&
+        valuecheckBox3 == true &&
+        valuecheckBox4 != true);
+
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -75,11 +80,8 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Checkbox(
-                    value: (valuecheckBox1 == true &&
-                            valuecheckBox2 == true &&
-                            valuecheckBox3 == true)
-                        ? true
-                        : valuecheckBox4,
+                    tristate: verifyTristateLogic ? true : false,
+                    value: verifyTristateLogic ? null : valuecheckBox4,
                     checkColor: Colors.white,
                     onChanged: (value) {
                       setState(() {
@@ -93,11 +95,8 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     "Aceitar todos os itens acima",
                     style: TextStyle(
-                      color: (valuecheckBox1 == true &&
-                              valuecheckBox2 == true &&
-                              valuecheckBox3 == true)
-                          ? Colors.black38
-                          : Colors.black,
+                      color:
+                          verifyTristateLogic ? Colors.black38 : Colors.black,
                     ),
                   ),
                 ],
