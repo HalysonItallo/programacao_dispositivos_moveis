@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:number_trivia/features/number_trivia/domain/entities/number_trivia_entity.dart';
 import 'package:number_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/get_random_number_trivia/get_random_number_trivia.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/usecase.dart';
+import 'package:number_trivia/core/usecases/usecase.dart';
 
 class MockNumberTriviaRepository extends Mock
     implements NumberTriviaRepository {}
@@ -12,11 +12,11 @@ class MockNumberTriviaRepository extends Mock
 void main() {
   group("Get Random Number Trivia Tests: ", () {
     late MockNumberTriviaRepository mockNumberTriviaRepository;
-    late GetRandomNumberTrivia getRandomNumberTrivia;
+    late GetRandomNumberTriviaImp getRandomNumberTrivia;
 
     setUp(() {
       mockNumberTriviaRepository = MockNumberTriviaRepository();
-      getRandomNumberTrivia = GetRandomNumberTrivia(
+      getRandomNumberTrivia = GetRandomNumberTriviaImp(
         numberTriviaRepository: mockNumberTriviaRepository,
       );
     });
