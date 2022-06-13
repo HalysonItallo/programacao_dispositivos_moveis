@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:number_trivia/core/network/networking_info.dart';
-import 'package:number_trivia/core/util/input_convert.dart';
 import 'package:number_trivia/features/number_trivia/data/datasources/local/number_trivia_local_data_source.dart';
 import 'package:number_trivia/features/number_trivia/data/datasources/remote/number_trivia_remote_data_source.dart';
 import 'package:number_trivia/features/number_trivia/data/repositories/number_trivia_repository_imp.dart';
@@ -19,9 +18,7 @@ Future<void> init() async {
   // Bloc
   sl.registerFactory(
     () => NumberTriviaBloc(
-        inputConverter: sl(),
-        getConcreteNumberTrivia: sl(),
-        getRandomNumberTrivia: sl()),
+        getConcreteNumberTrivia: sl(), getRandomNumberTrivia: sl()),
   );
 
   // Use cases
@@ -49,7 +46,6 @@ Future<void> init() async {
   );
 
   //! Core
-  sl.registerLazySingleton(() => InputConverter());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
   //! External
