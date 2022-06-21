@@ -1,68 +1,67 @@
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-import 'package:number_trivia/core/error/failure.dart';
-import 'package:number_trivia/core/usecases/usecase.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia/get_concrete_number_trivia.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/get_random_number_trivia/get_random_number_trivia.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/bloc.dart';
+// import 'dart:async';
+// import 'package:bloc/bloc.dart';
+// import 'package:number_trivia/core/error/failure.dart';
+// import 'package:number_trivia/core/usecases/usecase.dart';
 
-const String serverFailureMessage = 'Server Failure';
-const String cacheFailureMessage = 'Cache Failure';
-const String invalidInputFailureMessage =
-    'Invalid Input - The number must be a positive integer or zero.';
+// import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/bloc.dart';
 
-class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
-  final GetConcreteNumberTriviaImp getConcreteNumberTrivia;
-  final GetRandomNumberTriviaImp getRandomNumberTrivia;
+// const String serverFailureMessage = 'Server Failure';
+// const String cacheFailureMessage = 'Cache Failure';
+// const String invalidInputFailureMessage =
+//     'Invalid Input - The number must be a positive integer or zero.';
 
-  NumberTriviaBloc({
-    required this.getConcreteNumberTrivia,
-    required this.getRandomNumberTrivia,
-  }) : super(const NumberTriviaState.empty()) {
-    on<NumberTriviaEvent>(_onNumberTriviaEvent);
-  }
+// class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
+//   final GetConcreteNumberTriviaImp getConcreteNumberTrivia;
+//   final GetRandomNumberTriviaImp getRandomNumberTrivia;
 
-  Future<void> _onNumberTriviaEvent(
-      NumberTriviaEvent event, Emitter<NumberTriviaState> emit) {
-    return event.when(
-      getTriviaForConcreteNumber: (integer) async {
-        emit(const NumberTriviaState.loading());
+//   NumberTriviaBloc({
+//     required this.getConcreteNumberTrivia,
+//     required this.getRandomNumberTrivia,
+//   }) : super(const NumberTriviaState.empty()) {
+//     on<NumberTriviaEvent>(_onNumberTriviaEvent);
+//   }
 
-        int value = integer;
+//   Future<void> _onNumberTriviaEvent(
+//       NumberTriviaEvent event, Emitter<NumberTriviaState> emit) {
+//     return event.when(
+//       getTriviaForConcreteNumber: (integer) async {
+//         emit(const NumberTriviaState.loading());
 
-        final failureOrSuccess =
-            await getConcreteNumberTrivia(Params(number: value));
+//         int value = integer;
 
-        emit(
-          failureOrSuccess.fold(
-            (l) => NumberTriviaState.error(_mapFailureToMessage(l)),
-            (r) => NumberTriviaState.loaded(r),
-          ),
-        );
-      },
-      getTriviaForRandomNumber: () async {
-        emit(const NumberTriviaState.loading());
+//         final failureOrSuccess =
+//             await getConcreteNumberTrivia(Params(number: value));
 
-        final failureOrSuccess = await getRandomNumberTrivia(NoParams());
+//         emit(
+//           failureOrSuccess.fold(
+//             (l) => NumberTriviaState.error(_mapFailureToMessage(l)),
+//             (r) => NumberTriviaState.loaded(r),
+//           ),
+//         );
+//       },
+//       getTriviaForRandomNumber: () async {
+//         emit(const NumberTriviaState.loading());
 
-        emit(
-          failureOrSuccess.fold(
-            (l) => NumberTriviaState.error(_mapFailureToMessage(l)),
-            (r) => NumberTriviaState.loaded(r),
-          ),
-        );
-      },
-    );
-  }
+//         final failureOrSuccess = await getRandomNumberTrivia(NoParams());
 
-  String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure:
-        return serverFailureMessage;
-      case CacheFailure:
-        return cacheFailureMessage;
-      default:
-        return 'Unexpected error';
-    }
-  }
-}
+//         emit(
+//           failureOrSuccess.fold(
+//             (l) => NumberTriviaState.error(_mapFailureToMessage(l)),
+//             (r) => NumberTriviaState.loaded(r),
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   String _mapFailureToMessage(Failure failure) {
+//     switch (failure.runtimeType) {
+//       case ServerFailure:
+//         return serverFailureMessage;
+//       case CacheFailure:
+//         return cacheFailureMessage;
+//       default:
+//         return 'Unexpected error';
+//     }
+//   }
+// }
