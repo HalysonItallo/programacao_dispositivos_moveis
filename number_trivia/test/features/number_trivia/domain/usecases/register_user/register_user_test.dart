@@ -37,7 +37,7 @@ void main() {
           .thenAnswer((_) async => const Right(tUser));
 
       final result = await registerUserImp.call(
-        const Params(user: tUser),
+        const RegisterUserParams(user: tUser),
       );
 
       expect(result, right(tUser));

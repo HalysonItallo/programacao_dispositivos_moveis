@@ -63,7 +63,7 @@ void main() {
     });
   }
 
-  group('registerUser', () {
+  group('login', () {
     const tUserModel = UserModel(
       age: 12,
       email: 'test.com',
@@ -77,7 +77,7 @@ void main() {
         // arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         // act
-        verifyNever(() async => await repository.registerUser(tUserModel));
+        verifyNever(() async => await repository.login("test.com", "1234"));
         final result = await mockNetworkInfo.isConnected;
         // assert
         expect(result, true);

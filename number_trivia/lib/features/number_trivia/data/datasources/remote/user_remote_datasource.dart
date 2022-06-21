@@ -31,7 +31,10 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
   @override
   Future<UserModel> login(email, password) => _postFromUrl(
         Uri.http(baseUrl, 'login'),
-        {email: email, password: password},
+        {
+          "muh.nurali43@gmail.com",
+          "12345678",
+        },
         '',
       );
 

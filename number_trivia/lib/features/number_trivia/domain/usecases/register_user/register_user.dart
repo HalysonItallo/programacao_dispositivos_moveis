@@ -6,21 +6,21 @@ import 'package:number_trivia/features/number_trivia/data/models/user_model.dart
 import 'package:number_trivia/features/number_trivia/domain/entities/user_entity.dart';
 import 'package:number_trivia/features/number_trivia/domain/repositories/user_repository.dart';
 
-class RegisterUserImp extends UseCase<UserEntity, Params> {
+class RegisterUserImp extends UseCase<UserEntity, RegisterUserParams> {
   final UserRepository userRepository;
 
   RegisterUserImp({required this.userRepository});
 
   @override
-  Future<Either<Failure, UserEntity>> call(Params params) async {
+  Future<Either<Failure, UserEntity>> call(RegisterUserParams params) async {
     return await userRepository.registerUser(params.user);
   }
 }
 
-class Params extends Equatable {
+class RegisterUserParams extends Equatable {
   final UserModel user;
 
-  const Params({required this.user});
+  const RegisterUserParams({required this.user});
 
   @override
   List<Object?> get props => [user];

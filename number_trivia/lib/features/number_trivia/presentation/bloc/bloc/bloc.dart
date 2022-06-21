@@ -1,3 +1,3 @@
-export 'number_trivia_bloc.dart';
-export 'number_trivia_event.dart';
-export 'number_trivia_state.dart';
+export 'user_bloc.dart';
+export 'user_event.dart';
+export 'user_state.dart';

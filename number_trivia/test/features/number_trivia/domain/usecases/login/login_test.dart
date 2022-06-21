@@ -33,7 +33,7 @@ void main() {
           .thenAnswer((_) async => const Right(tUser));
 
       final result = await loginImp.call(
-        const Params(email: "test.com", password: "1234"),
+        const LoginParams(email: "test.com", password: "1234"),
       );
 
       expect(result, const Right(tUser));
