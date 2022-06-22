@@ -2,21 +2,30 @@ import 'package:number_trivia/features/number_trivia/domain/entities/user_entity
 
 class UserModel extends UserEntity {
   const UserModel({
+    required String id,
     required String name,
     required String email,
-    required String password,
+    String? password,
     required int age,
-  }) : super(name: name, email: email, password: password, age: age);
+  }) : super(name: name, email: email, password: password, age: age, id: id);
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        name: json['name'],
-        email: json['email'],
-        password: json['password'],
-        age: json['age']);
+      name: json['name'],
+      email: json['email'],
+      password: json['password'],
+      age: json['age'],
+      id: json['_id'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {'name': name, 'email': email, 'password': password, 'age': age};
+    return {
+      'name': name,
+      'email': email,
+      'password': password,
+      'age': age,
+      'id': id
+    };
   }
 }

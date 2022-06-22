@@ -5,14 +5,14 @@ import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user
 import 'package:number_trivia/features/number_trivia/presentation/widgets/widgets.dart';
 import 'package:number_trivia/injection.dart';
 
-class NumberTriviaPage extends StatefulWidget {
-  const NumberTriviaPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<NumberTriviaPage> createState() => _NumberTriviaPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _NumberTriviaPageState extends State<NumberTriviaPage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +38,12 @@ BlocProvider<UserBloc> buildBody(BuildContext context) {
               builder: (BuildContext context, UserState state) {
                 return Container(
                   child: state.maybeWhen(
+                    loading: () => const LoadingWidget(),
                     logged: (user) {
-                      return Text(user.name);
+                      return Text("$user");
                     },
-                    loggedOut: () {
-                      return const Text('Não logado');
+                    loggedOut: (message) {
+                      return Text(message);
                     },
                     orElse: () {
                       return null;

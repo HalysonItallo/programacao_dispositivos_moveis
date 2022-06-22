@@ -6,5 +6,6 @@ part 'user_state.freezed.dart';
 @freezed
 class UserState with _$UserState {
   const factory UserState.logged(UserEntity user) = _Logged;
-  const factory UserState.loggedOut() = _LoggedOut;
+  const factory UserState.loggedOut(String message) = _LoggedOut;
+  const factory UserState.loading() = _Loading;
 }

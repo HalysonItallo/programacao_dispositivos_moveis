@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:number_trivia/features/number_trivia/presentation/pages/number_trivia_page.dart';
+import 'package:number_trivia/features/number_trivia/presentation/pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const NumberTriviaPage(),
+      home: const HomePage(),
     );
   }
 }

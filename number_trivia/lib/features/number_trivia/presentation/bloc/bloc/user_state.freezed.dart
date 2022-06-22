@@ -19,19 +19,22 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserEntity user) logged,
-    required TResult Function() loggedOut,
+    required TResult Function(String message) loggedOut,
+    required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$UserState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Logged value) logged,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_Loading value) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,7 +140,8 @@ class _$_Logged implements _Logged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserEntity user) logged,
-    required TResult Function() loggedOut,
+    required TResult Function(String message) loggedOut,
+    required TResult Function() loading,
   }) {
     return logged(user);
   }
@@ -143,7 +150,8 @@ class _$_Logged implements _Logged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
   }) {
     return logged?.call(user);
   }
@@ -152,7 +160,8 @@ class _$_Logged implements _Logged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (logged != null) {
@@ -166,6 +175,7 @@ class _$_Logged implements _Logged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Logged value) logged,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_Loading value) loading,
   }) {
     return logged(this);
   }
@@ -175,6 +185,7 @@ class _$_Logged implements _Logged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
   }) {
     return logged?.call(this);
   }
@@ -184,6 +195,7 @@ class _$_Logged implements _Logged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (logged != null) {
@@ -207,6 +219,7 @@ abstract class _$$_LoggedOutCopyWith<$Res> {
   factory _$$_LoggedOutCopyWith(
           _$_LoggedOut value, $Res Function(_$_LoggedOut) then) =
       __$$_LoggedOutCopyWithImpl<$Res>;
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -218,54 +231,80 @@ class __$$_LoggedOutCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 
   @override
   _$_LoggedOut get _value => super._value as _$_LoggedOut;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$_LoggedOut(
+      message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_LoggedOut implements _LoggedOut {
-  const _$_LoggedOut();
+  const _$_LoggedOut(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'UserState.loggedOut()';
+    return 'UserState.loggedOut(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoggedOut);
+        (other.runtimeType == runtimeType &&
+            other is _$_LoggedOut &&
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_LoggedOutCopyWith<_$_LoggedOut> get copyWith =>
+      __$$_LoggedOutCopyWithImpl<_$_LoggedOut>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserEntity user) logged,
-    required TResult Function() loggedOut,
+    required TResult Function(String message) loggedOut,
+    required TResult Function() loading,
   }) {
-    return loggedOut();
+    return loggedOut(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
   }) {
-    return loggedOut?.call();
+    return loggedOut?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserEntity user)? logged,
-    TResult Function()? loggedOut,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
-      return loggedOut();
+      return loggedOut(message);
     }
     return orElse();
   }
@@ -275,6 +314,7 @@ class _$_LoggedOut implements _LoggedOut {
   TResult map<TResult extends Object?>({
     required TResult Function(_Logged value) logged,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_Loading value) loading,
   }) {
     return loggedOut(this);
   }
@@ -284,6 +324,7 @@ class _$_LoggedOut implements _LoggedOut {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
   }) {
     return loggedOut?.call(this);
   }
@@ -293,6 +334,7 @@ class _$_LoggedOut implements _LoggedOut {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Logged value)? logged,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
@@ -303,5 +345,119 @@ class _$_LoggedOut implements _LoggedOut {
 }
 
 abstract class _LoggedOut implements UserState {
-  const factory _LoggedOut() = _$_LoggedOut;
+  const factory _LoggedOut(final String message) = _$_LoggedOut;
+
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_LoggedOutCopyWith<_$_LoggedOut> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoadingCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
+
+  @override
+  _$_Loading get _value => super._value as _$_Loading;
+}
+
+/// @nodoc
+
+class _$_Loading implements _Loading {
+  const _$_Loading();
+
+  @override
+  String toString() {
+    return 'UserState.loading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(UserEntity user) logged,
+    required TResult Function(String message) loggedOut,
+    required TResult Function() loading,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(UserEntity user)? logged,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(UserEntity user)? logged,
+    TResult Function(String message)? loggedOut,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Logged value) logged,
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Logged value)? logged,
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Logged value)? logged,
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements UserState {
+  const factory _Loading() = _$_Loading;
 }
