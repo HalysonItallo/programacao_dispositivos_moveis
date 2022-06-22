@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_bloc.dart';
+import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_event.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_state.dart';
+import 'package:number_trivia/features/number_trivia/presentation/pages/home/home_page.dart';
+import 'package:number_trivia/features/number_trivia/presentation/pages/login/login_page.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/widgets.dart';
 import 'package:number_trivia/injection.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ControlPage extends StatefulWidget {
+  const ControlPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ControlPage> createState() => _ControlPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ControlPageState extends State<ControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Number Trivia'),
-      ),
       body: SingleChildScrollView(child: buildBody(context)),
     );
   }
@@ -32,7 +32,6 @@ BlocProvider<UserBloc> buildBody(BuildContext context) {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 10),
             // Top half
             BlocBuilder<UserBloc, UserState>(
               builder: (BuildContext context, UserState state) {
@@ -40,20 +39,18 @@ BlocProvider<UserBloc> buildBody(BuildContext context) {
                   child: state.maybeWhen(
                     loading: () => const LoadingWidget(),
                     logged: (user) {
-                      return Text("$user");
+                      return const HomePage();
                     },
                     loggedOut: (message) {
-                      return Text(message);
+                      return const LoginPage();
                     },
                     orElse: () {
-                      return null;
+                      return const LoginPage();
                     },
                   ),
                 );
               },
             ),
-            const SizedBox(height: 20),
-            const UserControls(),
           ],
         ),
       ),
