@@ -2,7 +2,7 @@ import 'package:number_trivia/features/number_trivia/domain/entities/user_entity
 
 class UserModel extends UserEntity {
   const UserModel({
-    required String id,
+    String? id,
     required String name,
     required String email,
     String? password,

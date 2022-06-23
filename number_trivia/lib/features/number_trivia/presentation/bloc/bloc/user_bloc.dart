@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:number_trivia/core/error/failure.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/login/login.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/logout/logout.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/register_user/register_user.dart';

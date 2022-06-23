@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_bloc.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_event.dart';
+import 'package:number_trivia/features/number_trivia/presentation/pages/registerPage/register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String snackBarMenssage;
+  const LoginPage({
+    Key? key,
+    required this.snackBarMenssage,
+  }) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,35 +32,78 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.50,
+      height: 300,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color.fromRGBO(89, 101, 111, 1),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: const Color.fromRGBO(89, 101, 111, 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ]),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Center(
-          child: Form(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: emailController,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(labelText: "E-mail"),
-                ),
-                TextField(
-                  controller: passwordController,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(labelText: "Senha"),
-                ),
-                ElevatedButton(
-                  onPressed: dispatchLogin,
-                  child: const Text("Entrar"),
-                )
-              ],
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: emailController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(labelText: "E-mail"),
+              ),
+              TextField(
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(labelText: "Senha"),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      dispatchLogin();
+                      if (widget.snackBarMenssage != '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              widget.snackBarMenssage,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueAccent),
+                    ),
+                    child: const Text("Entrar"),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueAccent),
+                    ),
+                    child: const Text("Cadastre-se"),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),

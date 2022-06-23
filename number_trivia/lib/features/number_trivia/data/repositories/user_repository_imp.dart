@@ -40,14 +40,32 @@ class UserRepositoryImp implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> logout(String token) {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<Either<Failure, UserModel>> logout(String token) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTrivia = await remoteDataSource.logout(token);
+        // localDataSource.cacheNumberTrivia(remoteTrivia as NumberTriviaModel);
+        return Right(remoteTrivia);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, UserModel>> registerUser(UserModel user) {
-    // TODO: implement registerUser
-    throw UnimplementedError();
+  Future<Either<Failure, UserModel>> registerUser(UserModel user) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTrivia = await remoteDataSource.registerUser(user);
+        // localDataSource.cacheNumberTrivia(remoteTrivia as NumberTriviaModel);
+        return Right(remoteTrivia);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_bloc.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_event.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_state.dart';
 import 'package:number_trivia/features/number_trivia/presentation/pages/home/home_page.dart';
 import 'package:number_trivia/features/number_trivia/presentation/pages/login/login_page.dart';
+import 'package:number_trivia/features/number_trivia/presentation/pages/registerPage/register_page.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/widgets.dart';
 import 'package:number_trivia/injection.dart';
 
@@ -19,7 +19,9 @@ class _ControlPageState extends State<ControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(child: buildBody(context)),
+      body: Center(
+        child: buildBody(context),
+      ),
     );
   }
 }
@@ -27,32 +29,35 @@ class _ControlPageState extends State<ControlPage> {
 BlocProvider<UserBloc> buildBody(BuildContext context) {
   return BlocProvider(
     create: (_) => sl<UserBloc>(),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            // Top half
-            BlocBuilder<UserBloc, UserState>(
-              builder: (BuildContext context, UserState state) {
-                return Container(
-                  child: state.maybeWhen(
-                    loading: () => const LoadingWidget(),
-                    logged: (user) {
-                      return const HomePage();
-                    },
-                    loggedOut: (message) {
-                      return const LoginPage();
-                    },
-                    orElse: () {
-                      return const LoginPage();
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+    child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          BlocBuilder<UserBloc, UserState>(
+            builder: (BuildContext context, UserState state) {
+              return Container(
+                child: state.maybeWhen(
+                  loading: () => const LoadingWidget(),
+                  logged: (user) {
+                    return const HomePage();
+                  },
+                  loggedOut: (message) {
+                    return LoginPage(
+                      snackBarMenssage: message,
+                    );
+                  },
+                  orElse: () {
+                    return const LoginPage(
+                      snackBarMenssage: '',
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     ),
   );
