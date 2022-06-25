@@ -40,12 +40,12 @@ class UserRepositoryImp implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> logout(String token) async {
+  Future<Either<Failure, void>> logout() async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteTrivia = await remoteDataSource.logout(token);
-        // localDataSource.cacheNumberTrivia(remoteTrivia as NumberTriviaModel);
-        return Right(remoteTrivia);
+        await remoteDataSource.logout();
+
+        return const Right(null);
       } on ServerException {
         return Left(ServerFailure());
       }

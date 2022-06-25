@@ -4,7 +4,6 @@ import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user
 import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_state.dart';
 import 'package:number_trivia/features/number_trivia/presentation/pages/home/home_page.dart';
 import 'package:number_trivia/features/number_trivia/presentation/pages/login/login_page.dart';
-import 'package:number_trivia/features/number_trivia/presentation/pages/registerPage/register_page.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/widgets.dart';
 import 'package:number_trivia/injection.dart';
 
@@ -19,46 +18,40 @@ class _ControlPageState extends State<ControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: buildBody(context),
+      body: BlocProvider(
+        create: (_) => sl<UserBloc>(),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              BlocBuilder<UserBloc, UserState>(
+                builder: (BuildContext context, UserState state) {
+                  return Container(
+                    child: state.maybeWhen(
+                      loading: () => const LoadingWidget(),
+                      logged: (user) {
+                        return const HomePage();
+                      },
+                      loggedOut: (message) {
+                        return LoginPage(
+                          snackBarMenssage: message,
+                        );
+                      },
+                      orElse: () {
+                        return const LoginPage(
+                          snackBarMenssage: '',
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
-}
-
-BlocProvider<UserBloc> buildBody(BuildContext context) {
-  return BlocProvider(
-    create: (_) => sl<UserBloc>(),
-    child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          BlocBuilder<UserBloc, UserState>(
-            builder: (BuildContext context, UserState state) {
-              return Container(
-                child: state.maybeWhen(
-                  loading: () => const LoadingWidget(),
-                  logged: (user) {
-                    return const HomePage();
-                  },
-                  loggedOut: (message) {
-                    return LoginPage(
-                      snackBarMenssage: message,
-                    );
-                  },
-                  orElse: () {
-                    return const LoginPage(
-                      snackBarMenssage: '',
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    ),
-  );
 }

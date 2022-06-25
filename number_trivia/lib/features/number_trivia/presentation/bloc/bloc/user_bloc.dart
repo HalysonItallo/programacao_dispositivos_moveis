@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:number_trivia/core/usecases/usecase.dart';
+import 'package:number_trivia/features/number_trivia/data/models/user_model.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/login/login.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/logout/logout.dart';
 import 'package:number_trivia/features/number_trivia/domain/usecases/register_user/register_user.dart';
@@ -38,7 +40,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           ),
         );
       },
-      logout: (token) async {},
+      logout: () async {
+        emit(const UserState.loading());
+
+        final failureOrSuccess = await logoutImp(NoParams());
+
+        emit(
+          failureOrSuccess.fold(
+            (l) => const UserState.logged(
+              UserModel(
+                age: 0,
+                id: '',
+                email: '',
+                name: '',
+                password: '',
+              ),
+            ),
+            (r) => const UserState.loggedOut("Deslogado com sucesso !!!"),
+          ),
+        );
+      },
       registerUser: (user) async {
         emit(const UserState.loading());
 
@@ -48,9 +69,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
         emit(
           failureOrSuccess.fold(
-            (l) => const UserState.loggedOut("Ops, estamos com problemas !!!"),
-            (r) =>
-                const UserState.loggedOut("Usuário cadastrado com sucesso !!!"),
+            (l) => const UserState.loggedOut("Verifique seus campos"),
+            (r) => UserState.logged(r),
           ),
         );
       },

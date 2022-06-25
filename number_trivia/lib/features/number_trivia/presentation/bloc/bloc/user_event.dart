@@ -7,7 +7,7 @@ part 'user_event.freezed.dart';
 class UserEvent with _$UserEvent {
   const factory UserEvent.login(String email, String password) = _Login;
 
-  const factory UserEvent.logout(String token) = _Logout;
+  const factory UserEvent.logout() = _Logout;
 
   const factory UserEvent.registerUser(UserModel user) = _RegisterUser;
 }

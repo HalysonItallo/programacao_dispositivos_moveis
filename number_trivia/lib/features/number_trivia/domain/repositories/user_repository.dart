@@ -5,5 +5,5 @@ import 'package:number_trivia/features/number_trivia/data/models/user_model.dart
 abstract class UserRepository {
   Future<Either<Failure, UserModel>> registerUser(UserModel user);
   Future<Either<Failure, UserModel>> login(String email, String password);
-  Future<Either<Failure, UserModel>> logout(String token);
+  Future<Either<Failure, void>> logout();
 }

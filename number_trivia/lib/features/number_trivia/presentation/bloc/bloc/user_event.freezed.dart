@@ -19,21 +19,21 @@ mixin _$UserEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) login,
-    required TResult Function(String token) logout,
+    required TResult Function() logout,
     required TResult Function(UserModel user) registerUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
     required TResult orElse(),
   }) =>
@@ -150,7 +150,7 @@ class _$_Login implements _Login {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) login,
-    required TResult Function(String token) logout,
+    required TResult Function() logout,
     required TResult Function(UserModel user) registerUser,
   }) {
     return login(email, password);
@@ -160,7 +160,7 @@ class _$_Login implements _Login {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
   }) {
     return login?.call(email, password);
@@ -170,7 +170,7 @@ class _$_Login implements _Login {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
     required TResult orElse(),
   }) {
@@ -229,7 +229,6 @@ abstract class _Login implements UserEvent {
 abstract class _$$_LogoutCopyWith<$Res> {
   factory _$$_LogoutCopyWith(_$_Logout value, $Res Function(_$_Logout) then) =
       __$$_LogoutCopyWithImpl<$Res>;
-  $Res call({String token});
 }
 
 /// @nodoc
@@ -240,80 +239,57 @@ class __$$_LogoutCopyWithImpl<$Res> extends _$UserEventCopyWithImpl<$Res>
 
   @override
   _$_Logout get _value => super._value as _$_Logout;
-
-  @override
-  $Res call({
-    Object? token = freezed,
-  }) {
-    return _then(_$_Logout(
-      token == freezed
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_Logout implements _Logout {
-  const _$_Logout(this.token);
-
-  @override
-  final String token;
+  const _$_Logout();
 
   @override
   String toString() {
-    return 'UserEvent.logout(token: $token)';
+    return 'UserEvent.logout()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Logout &&
-            const DeepCollectionEquality().equals(other.token, token));
+        (other.runtimeType == runtimeType && other is _$_Logout);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(token));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_LogoutCopyWith<_$_Logout> get copyWith =>
-      __$$_LogoutCopyWithImpl<_$_Logout>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) login,
-    required TResult Function(String token) logout,
+    required TResult Function() logout,
     required TResult Function(UserModel user) registerUser,
   }) {
-    return logout(token);
+    return logout();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
   }) {
-    return logout?.call(token);
+    return logout?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
     required TResult orElse(),
   }) {
     if (logout != null) {
-      return logout(token);
+      return logout();
     }
     return orElse();
   }
@@ -354,12 +330,7 @@ class _$_Logout implements _Logout {
 }
 
 abstract class _Logout implements UserEvent {
-  const factory _Logout(final String token) = _$_Logout;
-
-  String get token => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$$_LogoutCopyWith<_$_Logout> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _Logout() = _$_Logout;
 }
 
 /// @nodoc
@@ -427,7 +398,7 @@ class _$_RegisterUser implements _RegisterUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String email, String password) login,
-    required TResult Function(String token) logout,
+    required TResult Function() logout,
     required TResult Function(UserModel user) registerUser,
   }) {
     return registerUser(user);
@@ -437,7 +408,7 @@ class _$_RegisterUser implements _RegisterUser {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
   }) {
     return registerUser?.call(user);
@@ -447,7 +418,7 @@ class _$_RegisterUser implements _RegisterUser {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String email, String password)? login,
-    TResult Function(String token)? logout,
+    TResult Function()? logout,
     TResult Function(UserModel user)? registerUser,
     required TResult orElse(),
   }) {

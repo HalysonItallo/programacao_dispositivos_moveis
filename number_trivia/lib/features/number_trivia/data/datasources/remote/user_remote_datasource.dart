@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:number_trivia/core/error/exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:number_trivia/features/number_trivia/data/models/user_model.dart';
@@ -13,7 +12,7 @@ abstract class UserRemoteDataSource {
   Future<UserModel> login(String email, String password);
 
   /// Throws a [ServerException] for all error codes.
-  Future<UserModel> logout(String token);
+  Future<void> logout();
 }
 
 class UserRemoteDataSourceImp implements UserRemoteDataSource {
@@ -73,8 +72,24 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
   }
 
   @override
-  Future<UserModel> logout(String token) {
-    throw UnimplementedError();
+  Future<void> logout() async {
+    var token = sharedPreferences.get('token');
+
+    final response = await client.post(
+      Uri.https(baseUrl, "user/logout"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Barrer $token'
+      },
+    );
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      sharedPreferences.remove('token');
+    } else {
+      throw ServerException();
+    }
   }
 
   // Future<UserModel> _getFromUrl(Uri url) async {

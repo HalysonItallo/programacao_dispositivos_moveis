@@ -16,7 +16,12 @@ void main() {
     setUpAll(
       () => registerFallbackValue(
         const UserEntity(
-            name: "Test", email: "test.com", password: "1234", age: 17),
+          id: "1",
+          name: "Test",
+          email: "test.com",
+          password: "1234",
+          age: 17,
+        ),
       ),
     );
 
