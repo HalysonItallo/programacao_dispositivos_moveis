@@ -76,14 +76,12 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
     var token = sharedPreferences.get('token');
 
     final response = await client.post(
-      Uri.https(baseUrl, "user/logout"),
+      Uri.https(baseUrl, "/user/logout"),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Barrer $token'
+        'Authorization': 'Bearer $token'
       },
     );
-
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       sharedPreferences.remove('token');
@@ -91,19 +89,4 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
       throw ServerException();
     }
   }
-
-  // Future<UserModel> _getFromUrl(Uri url) async {
-  //   final response = await client.get(
-  //     url,
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     return UserModel.fromJson(json.decode(response.body));
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
 }
