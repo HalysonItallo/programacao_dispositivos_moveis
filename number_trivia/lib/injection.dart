@@ -9,7 +9,7 @@ import 'package:task_app/features/task_app/domain/repositories/user_repository.d
 import 'package:task_app/features/task_app/domain/usecases/login/login.dart';
 import 'package:task_app/features/task_app/domain/usecases/logout/logout.dart';
 import 'package:task_app/features/task_app/domain/usecases/register_user/register_user.dart';
-import 'package:task_app/features/task_app/presentation/bloc/bloc/user_bloc.dart';
+import 'package:task_app/features/task_app/presentation/bloc/user_bloc/user_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;

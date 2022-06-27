@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_app/features/task_app/data/models/user_model.dart';
-import 'package:task_app/features/task_app/presentation/bloc/bloc/user_bloc.dart';
-import 'package:task_app/features/task_app/presentation/bloc/bloc/user_state.dart';
+import 'package:task_app/features/task_app/presentation/bloc/user_bloc/user_bloc.dart';
+import 'package:task_app/features/task_app/presentation/bloc/user_bloc/user_state.dart';
 import 'package:task_app/features/task_app/presentation/pages/home/home_page.dart';
 import 'package:task_app/features/task_app/presentation/pages/login/login_page.dart';
 import 'package:task_app/features/task_app/presentation/widgets/loading_widget.dart';
 import 'package:task_app/injection.dart';
 
-import '../../bloc/bloc/user_event.dart';
+import '../../bloc/user_bloc/user_event.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

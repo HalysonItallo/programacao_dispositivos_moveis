@@ -5,7 +5,6 @@ import 'package:task_app/features/task_app/data/models/user_model.dart';
 import 'package:task_app/features/task_app/domain/usecases/login/login.dart';
 import 'package:task_app/features/task_app/domain/usecases/logout/logout.dart';
 import 'package:task_app/features/task_app/domain/usecases/register_user/register_user.dart';
-
 import 'package:task_app/features/task_app/presentation/bloc/bloc.dart';
 
 const String serverFailureMessage = 'Server Failure';
