@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:number_trivia/core/error/exceptions.dart';
-import 'package:number_trivia/core/error/failure.dart';
-import 'package:number_trivia/core/network/networking_info.dart';
-import 'package:number_trivia/features/number_trivia/data/datasources/local/user_local_datasource.dart';
-import 'package:number_trivia/features/number_trivia/data/datasources/remote/user_remote_datasource.dart';
-import 'package:number_trivia/features/number_trivia/data/models/user_model.dart';
-import 'package:number_trivia/features/number_trivia/data/repositories/user_repository_imp.dart';
+import 'package:task_app/core/error/exceptions.dart';
+import 'package:task_app/core/error/failure.dart';
+import 'package:task_app/core/network/networking_info.dart';
+import 'package:task_app/features/task_app/data/datasources/local/user_local_datasource.dart';
+import 'package:task_app/features/task_app/data/datasources/remote/user_remote_datasource.dart';
+import 'package:task_app/features/task_app/data/models/user_model.dart';
+import 'package:task_app/features/task_app/data/repositories/user_repository_imp.dart';
 
 class MockRemoteDataSource extends Mock implements UserRemoteDataSource {}
 

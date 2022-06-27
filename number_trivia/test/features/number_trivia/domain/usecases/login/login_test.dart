@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:number_trivia/features/number_trivia/data/models/user_model.dart';
-import 'package:number_trivia/features/number_trivia/domain/entities/user_entity.dart';
-import 'package:number_trivia/features/number_trivia/domain/repositories/user_repository.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/login/login.dart';
+import 'package:task_app/features/task_app/data/models/user_model.dart';
+import 'package:task_app/features/task_app/domain/entities/user_entity.dart';
+import 'package:task_app/features/task_app/domain/repositories/user_repository.dart';
+import 'package:task_app/features/task_app/domain/usecases/login/login.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 

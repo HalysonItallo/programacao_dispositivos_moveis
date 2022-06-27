@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:number_trivia/injection.dart' as di;
-import 'package:number_trivia/my_app.dart';
+import 'package:task_app/injection.dart' as di;
+import 'package:task_app/my_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

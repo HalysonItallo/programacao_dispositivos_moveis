@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:number_trivia/core/network/networking_info.dart';
+import 'package:task_app/core/network/networking_info.dart';
 
 class MockDataConnectionChecker extends Mock
     implements InternetConnectionChecker {}

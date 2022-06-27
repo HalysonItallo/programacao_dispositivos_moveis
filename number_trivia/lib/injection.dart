@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:number_trivia/core/network/networking_info.dart';
-import 'package:number_trivia/features/number_trivia/data/datasources/local/user_local_datasource.dart';
-import 'package:number_trivia/features/number_trivia/data/datasources/remote/user_remote_datasource.dart';
-import 'package:number_trivia/features/number_trivia/data/repositories/user_repository_imp.dart';
-import 'package:number_trivia/features/number_trivia/domain/repositories/user_repository.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/login/login.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/logout/logout.dart';
-import 'package:number_trivia/features/number_trivia/domain/usecases/register_user/register_user.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/bloc/user_bloc.dart';
+import 'package:task_app/core/network/networking_info.dart';
+import 'package:task_app/features/task_app/data/datasources/local/user_local_datasource.dart';
+import 'package:task_app/features/task_app/data/datasources/remote/user_remote_datasource.dart';
+import 'package:task_app/features/task_app/data/repositories/user_repository_imp.dart';
+import 'package:task_app/features/task_app/domain/repositories/user_repository.dart';
+import 'package:task_app/features/task_app/domain/usecases/login/login.dart';
+import 'package:task_app/features/task_app/domain/usecases/logout/logout.dart';
+import 'package:task_app/features/task_app/domain/usecases/register_user/register_user.dart';
+import 'package:task_app/features/task_app/presentation/bloc/bloc/user_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
